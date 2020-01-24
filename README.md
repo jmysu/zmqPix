@@ -6,17 +6,17 @@ Transmit Pixmap to network device w/ ZMQ!
 <img src="gif/zmqPix free.gif" width="512"/>
 <br/><br/>
 
-zmqPix in action!<br/>
-Bottom-Left:zmqPix on MAC, Upper-Right:RPi4<br/>
+## zmqPix in action!<br/>
+_Bottom-Left:zmqPix on MAC, Upper-Right:RPi4_<br/>
 <img src="gif/zmqPix0124.gif" width="512"/>
 <br/><br/>
 
 
 
-## RPi libZmq install:
+### RPi libZmq install:
     #sudo apt install libzmq3-dev
 
-## MacOS libZmq install:
+### MacOS libZmq install:
     #brew install zmq
 
 
