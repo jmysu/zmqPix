@@ -5,6 +5,9 @@ Transmit Pixmap to network device w/ ZMQ!
 <br/>
 <img src="gif/zmqPix free.gif" width="512"/>
 <br/><br/>
+
+zmqPix in action!
+Bottom-Left:zmqPix on MAC, Upper-Right:RPi4
 <img src="gif/zmqPix0124.gif" width="512"/>
 <br/><br/>
 
