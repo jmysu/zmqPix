@@ -1,11 +1,12 @@
 # zmqPix
 Free yours Pixmap w/ ZMQ
 
-A Modbus Client/Master for PLC controller, base on QT5.
-<img src="gif/zmqPix free.gif" width="480"/>
+Transmit Pixmap to network device w/ ZMQ!
 <br/>
-<img src="gif/zmqPix0124.gif" width="640"/>
-<br/>
+<img src="gif/zmqPix free.gif" width="512"/>
+<br/><br/>
+<img src="gif/zmqPix0124.gif" width="512"/>
+<br/><br/>
 
 
 
@@ -13,9 +14,9 @@ A Modbus Client/Master for PLC controller, base on QT5.
     #sudo apt install libzmq3-dev
 
 ## MacOS libZmq install:
-    #brew install libzmq
+    #brew install zmq
 
 
 ### References
-  - [libZMQ]( )
+  - [libZMQ](https://github.com/zeromq/libzmq )
   
