@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>image/Trump.gif</file>
+        <file>image/2019COV.gif</file>
     </qresource>
 </RCC>

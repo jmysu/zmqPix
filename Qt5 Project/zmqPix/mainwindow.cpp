@@ -53,7 +53,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&sendTimerN, SIGNAL(timeout()), this, SLOT(on_pushButtonSend_clicked()));
 
     //Load GIF
-    myGif = new QMovie(":/image/Trump.gif");
+    //myGif = new QMovie(":/image/Trump.gif");
+    myGif = new QMovie(":/image/2019COV.gif");
+
     ui->labelPixSend->resize(ui->frame->size().width()/2, ui->frame->size().height());
     myGif->setScaledSize(ui->labelPixSend->size());
     ui->labelPixSend->setMovie(myGif);
@@ -96,16 +98,24 @@ qDebug() << __FUNCTION__ << ba.size();
         //qDebug() << "JSON:" << jdoc.toJson(QJsonDocument::Compact);
         //Parse JSON
         QJsonObject jobj = jdoc.object();
+        QString sHBcount, sTime;
         if (jobj.contains("HB")) {
             qDebug()<< "HearBeat:" << jobj["HB"].toInt();
-            QString sInfo = QString("HeartBeat (%1)").arg(jobj["HB"].toInt());
-            ui->labelStatusRecv->setText(sInfo);
+            sHBcount = QString("HeartBeat (%1)").arg(jobj["HB"].toInt());
+            ui->labelStatusRecv->setText("<"+zthread->sAddrSubscriber+">"+sHBcount);
+            }
+        if (jobj.contains("Time")) {
+            timeLastSent = QTime::fromString(jobj["Time"].toString());
+            qDebug()<< "Time:" << timeLastSent;
+            sTime = QString(" Sent Time:%1").arg(timeLastSent.toString());
+            ui->labelStatusRecv->setText("<"+zthread->sAddrSubscriber+">"+sHBcount+sTime);
             }
         }
     else if (ba.contains("PNG")) {
         QPixmap img;
         img.loadFromData(ba);
-        qDebug() << "QPixmap:" << ba.size();
+        iLastBytes = ba.size();
+        qDebug() << "QPixmap:" << iLastBytes;
         newImageReceived(img);
         }
 }
@@ -124,11 +134,15 @@ void MainWindow::on_pushButtonSend_clicked()
     buffer.open(QIODevice::WriteOnly);
     pm.save(&buffer, "PNG");
 
+    zthread->sendHeartBeat(); //set HB first
     emit sigPubMsg(bArray);
 
     timeElapsed.start();
     QString sInfo = QString("%1 (%2x%3)").arg(m_imagePath).arg(pm.width()).arg(pm.height());
     ui->labelStatusSend->setText(sInfo);
+
+    //fKBN=0;
+    //fTN=0;
 }
 
 void MainWindow::on_pushButtonLoad_clicked()
@@ -143,18 +157,34 @@ void MainWindow::on_pushButtonLoad_clicked()
     QString sInfo = QString("%1 (%2x%3)").arg(m_imagePath).arg(image.width()).arg(image.height());
     ui->labelStatusSend->setText(sInfo);
 
-    iRecvCnt=0;
+    //iRecvCnt=0;
+    fKBN=0;
+    fTN=0;
 }
 
 void MainWindow::newImageReceived(QPixmap pm)
 {
     if (!pm) return;
+    /*
     float iSize = pm.width()*pm.height()*pm.depth()/(8*1024*1024.0);
     float iTimeElapsed = timeElapsed.elapsed()/1000.0;
     ui->labelStatusRecv->clear();
     ui->labelPixRecv->setPixmap(pm);
     QString sInfo = QString("Got Pixmap(%1x%2)@%3MB/s x%4").arg(pm.width()).arg(pm.height()).arg(iSize/iTimeElapsed, 4,'f',1).arg(++iRecvCnt);
     ui->labelStatusRecv->setText(sInfo);
+    */
+    ui->labelStatusPng->clear();
+    ui->labelPixRecv->setPixmap(pm);
+    int iTimeSpentMs = timeLastSent.msecsTo(QTime::currentTime());
+    float fKB =  iLastBytes/1024.0;
+    float fT  =  iTimeSpentMs/1000.0;
+    float fKBs= fKB/fT;
+    fKBN += fKB;
+    fTN  += fT;
+    qDebug() << fKB << fT << fKB/fT << fKBN << fTN;
+    char buf[64];
+    sprintf(buf, "Got (%4dx%4d)@%6.1fKB/s avg:%6.1fKB/s", pm.width(), pm.height(), fKBs, fKBN/fTN);
+    ui->labelStatusPng->setText(QString(buf));
 }
 
 void MainWindow::on_pushButtonSendTimer_clicked()
@@ -169,4 +199,6 @@ void MainWindow::on_pushButtonSendTimer_clicked()
     else {
         ui->pushButtonSendTimer->setText("Stop");
         }
+    fKBN=0;
+    fTN=0;
 }

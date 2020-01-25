@@ -737,7 +737,8 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_resource.cpp
 qrc_resource.cpp: resource.qrc \
 		../../Qt/5.13.0/clang_64/bin/rcc \
-		image/Trump.gif
+		image/Trump.gif \
+		image/2019COV.gif
 	/Users/imacsierra/Qt/5.13.0/clang_64/bin/rcc -name resource resource.qrc -o qrc_resource.cpp
 
 compiler_moc_predefs_make_all: moc/moc_predefs.h

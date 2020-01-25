@@ -48,7 +48,7 @@ void ZThread::sendHeartBeat()
     QJsonObject jsonObj {
             {"Name", qApp->applicationName()},
             {"OS",   QSysInfo::prettyProductName()},
-            {"TIME", QTime::currentTime().toString()},
+            {"Time", QTime::currentTime().toString()},
             {"HB", iHBcount++}
             };
     QJsonDocument doc(jsonObj);

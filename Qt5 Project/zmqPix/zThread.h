@@ -29,8 +29,10 @@ public:
 
     int iPortPublisher=5556;
     int iPortSubscriber=5556;
-    QString sAddrPublisher="192.168.0.14";
-    QString sAddrSubscriber="192.168.0.37";
+    //QString sAddrPublisher="192.168.0.14";
+    //QString sAddrSubscriber="192.168.0.37";
+    QString sAddrPublisher="localhost";
+    QString sAddrSubscriber="127.0.0.1";
 
     Subscriber *pSubscriber;
     Publisher *pPublisher;

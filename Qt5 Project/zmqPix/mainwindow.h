@@ -37,6 +37,9 @@ public:
     QTime  timeElapsed;
     QMovie *myGif;
     QString m_imagePath;
+    QTime timeLastSent;
+    int iLastBytes;
+    float fKBN, fTN;
 
 signals:
     void sigPubMsg(const QByteArray &ba);
@@ -55,7 +58,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    int iRecvCnt=0;
+    //int iRecvCnt=0;
 
     ZThread *zthread;
 };

@@ -51,20 +51,22 @@ RESOURCES += \
 
 #------------------------------------------------
 #SET INCLUDEPATH & LIBS when not using PKG-CONFIG
-#macx: {
+macx: {
 #    INCLUDEPATH += /usr/local/include
 #    LIBS += -L"/usr/local/lib" -lzmq
 #    ICON = modbus.icns
-#    }
-#unix:!macx {
+PKG_CONFIG = /usr/local/bin/pkg-config
+    }
+unix:!macx {
 #    LIBS += -lzmq
-#    }
+PKG_CONFIG = /usr/bin/pkg-config
+    }
 
 #------------------------------------
 #USING PKG-CONFIG for include and lib
 QT_CONFIG -= no-pkg-config
 CONFIG  += link_pkgconfig
 PKGCONFIG += libzmq
-PKG_CONFIG = /usr/local/bin/pkg-config
+
 
 DISTFILES +=
