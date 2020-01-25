@@ -3,7 +3,7 @@ Free yours Pixmap w/ ZMQ
 
 Transmit Pixmap to network device w/ ZMQ!
 <br/>
-<img src="gif/zmqPix free.gif" width="640"/>
+<img src="gif/zmqPix 2019COV.gif" width="640"/>
 <br/><br/>
 
 ## zmqPix in action!<br/>
